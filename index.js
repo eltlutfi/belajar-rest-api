@@ -37,7 +37,7 @@ app.post("/api/champions", (req, res) => {
 });
 
 app.put("/api/champions/:id", (req, res) => {
-    // Destructuring
+
     const { club, manager, stadium } = req.body;
 
     const indexChampion = champions.findIndex(
@@ -53,6 +53,19 @@ app.put("/api/champions/:id", (req, res) => {
 
     res.status(200).json(champions[indexChampion]);
 });
+
+app.delete("/api/champions/:id", (req, res) => {
+    const indexChampion = champions.findIndex(
+        (e) => e.id === Number(req.params.id)
+        );
+    
+    champions.splice(indexChampion, 1);
+
+    res.status(200).json({ 
+        message: `Cahmpion with ID ${req.params.id} is deleted`,
+    });
+});
+
 
 app.listen(port, () => {
     console.log(`Listening on http://localhost:${port}`);
