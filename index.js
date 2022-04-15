@@ -20,7 +20,7 @@ app.get('/api/champions/:id', (req, res) => {
 app.post("/api/champions", (req, res) => {
     
     const { club, manager, stadium } = req.body;
-    
+
     const lastId = champions[champions.length - 1].id;
     const newId = lastId + 1;
 
@@ -34,6 +34,24 @@ app.post("/api/champions", (req, res) => {
     champions.push(champion);
     
     res.status(201).json(champion);
+});
+
+app.put("/api/champions/:id", (req, res) => {
+    // Destructuring
+    const { club, manager, stadium } = req.body;
+
+    const indexChampion = champions.findIndex(
+        (e) => e.id === Number(req.params.id)
+        );
+
+    champions[indexChampion] = {
+        id: Number(req.params.id),
+        club,
+        manager,
+        stadium,
+    };
+
+    res.status(200).json(champions[indexChampion]);
 });
 
 app.listen(port, () => {
